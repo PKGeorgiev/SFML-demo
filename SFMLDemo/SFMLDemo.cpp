@@ -72,22 +72,20 @@ int main()
         {
             if (event.type == sf::Event::Closed)
             {
-                shoulRun = false;
                 window.close();
-                break;
             }
-
-            std::string nextScene;
-
-            shoulRun = currentScene->handleEvents(window, event, nextScene);
-
-            if (!shoulRun)
+            else
             {
-                window.close();
-                break;
-            } 
+                std::string nextScene;
 
-            currentScene = getSceneByName(scenes, currentScene, nextScene);
+                if (!(shoulRun = currentScene->handleEvents(window, event, nextScene)))
+                {
+                    window.close();
+                    break;
+                }
+
+                currentScene = getSceneByName(scenes, currentScene, nextScene);
+            }
         }
 
         if (shoulRun)
